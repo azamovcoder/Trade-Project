@@ -1,19 +1,43 @@
 .sidebar {
+  position: sticky;
+  top: 0;
+  left: 0;
   height: 100vh;
   padding: 20px;
   background: #eee;
+  transition: all 0.5s ease;
   &__list {
     display: flex;
     flex-direction: column;
     gap: 30px;
   }
+  p {
+    transition: all 0.5s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+  }
   &__item {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: #ddd;
-    padding: 10px;
-    color: rgb(13, 13, 13);
-    border-radius: 4px;
+    a {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: #ddd;
+      padding: 10px;
+      color: rgb(13, 13, 13);
+      border-radius: 4px;
+    }
+  }
+  &__show {
+    overflow: hidden;
+    a {
+      p {
+        opacity: 0;
+      }
+    }
+    span {
+      opacity: 1;
+    }
   }
 }

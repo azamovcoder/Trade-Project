@@ -1,0 +1,39 @@
+.login {
+  padding-top: 100px;
+  width: 300px;
+  min-height: 500px;
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    &__input {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      input {
+        padding: 10px;
+        outline: none;
+        border: 1.5px solid #969393;
+        transition: 0.4s;
+        &:hover {
+          border: 1.5px solid #33a0ff;
+          border-radius: 4px;
+        }
+      }
+    }
+    button {
+      padding: 10px 5px;
+      border: none;
+      background-color: #33a0ff;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 5px;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .login {
+    width: 250px;
+  }
+}
