@@ -1,22 +1,24 @@
 import "./TableMembers.scss";
 
+import { Link, useParams } from "react-router-dom";
+import React, { useState } from "react";
 import {
   useGetCustomerByIdQuery,
   useGetCustomersQuery,
 } from "../../context/api/customersApi";
 
-import React from "react";
-import { useParams } from "react-router-dom";
+import Module from "../Module/Module";
+import PaymeForm from "../paymeForm/Payment";
+import Payment from "../paymeForm/Payment";
 
 const TableMembers = () => {
   const { data, error, isLoading } = useGetCustomersQuery();
+  const [payment, setPayment] = useState(false);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
   console.log(data.innerData);
 
-  // const { Id } = useParams();
-  // const { data: product } = useGetCustomerByIdQuery(Id);
   return (
     <>
       <table className="table">
@@ -53,14 +55,28 @@ const TableMembers = () => {
                 </span>
               </td>
               <td>
-                <button className="table__payment__button">Payment</button>
+                <button
+                  onClick={() => setPayment(customer)}
+                  className="table__payment__button"
+                >
+                  Payment
+                </button>
               </td>
               <td>
-                <button className="table__more__button">More...</button>
+                <Link to={`/admin/customer/${customer._id}`}>
+                  <button className="table__more__button">More...</button>
+                </Link>
               </td>
             </tr>
           ))}
         </tbody>
+        {payment ? (
+          <Module bg={"#aaa8"} close={setPayment}>
+            <Payment close={setPayment} id={payment._id} />
+          </Module>
+        ) : (
+          <></>
+        )}
       </table>
     </>
   );

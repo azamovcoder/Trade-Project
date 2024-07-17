@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 
 import Admin from "./pages/Admin/Admin";
 import Create from "./pages/Admin/create/Create";
+import Customer from "./pages/Admin/Customer/Customer";
 import Customers from "./pages/Admin/customers/Customers";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
@@ -13,7 +14,7 @@ import { useState } from "react";
 
 function App() {
   const [menu, setMenu] = useState(false);
-    const { pathname } = useLocation();
+  const { pathname } = useLocation();
   return (
     <>
       {pathname !== "/" && <Header setMenu={setMenu} />}
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin menu={menu} />}>
           <Route path="customers" element={<Customers />} />
+          <Route path="customer" element={<Customer />} />
           <Route path="storage" element={<Storage />} />
           <Route path="sellers" element={<Sellers />} />
           <Route path="create" element={<Create />} />
