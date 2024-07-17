@@ -6,7 +6,6 @@ const Home = () => {
   return (
     <div>
       <Login />
-      <Link to={"admin"}>Admin</Link>
     </div>
   );
 };

@@ -12,8 +12,8 @@ import { useGetValue } from "../../../hooks/useGetValue";
 import { useNavigate } from "react-router-dom";
 
 let initialState = {
-  username: "",
-  password: "",
+  username: "azamovcoder",
+  password: "abdulaziz230",
 };
 
 const Login = () => {

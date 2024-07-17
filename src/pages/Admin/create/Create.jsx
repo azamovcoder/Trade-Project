@@ -1,3 +1,5 @@
+import "./Create.scss";
+
 import React, { useState } from "react";
 
 import { useCreateCustomerMutation } from "../../../context/api/customersApi";
@@ -34,7 +36,7 @@ const Create = () => {
   };
   return (
     <div>
-      <form onSubmit={handleCreate} action="" className="create__form">
+      <form onSubmit={handleCreate} className="create__form">
         <input
           required
           value={fname}

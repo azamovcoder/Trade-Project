@@ -13,15 +13,17 @@ import { useState } from "react";
 
 function App() {
   const [menu, setMenu] = useState(false);
+    const { pathname } = useLocation();
   return (
     <>
-      <Header setMenu={setMenu} />
+      {pathname !== "/" && <Header setMenu={setMenu} />}
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin menu={menu} />}>
           <Route path="customers" element={<Customers />} />
           <Route path="storage" element={<Storage />} />
-          <Route path="sellers" element={<Sellers/>} />
+          <Route path="sellers" element={<Sellers />} />
           <Route path="create" element={<Create />} />
         </Route>
       </Routes>
