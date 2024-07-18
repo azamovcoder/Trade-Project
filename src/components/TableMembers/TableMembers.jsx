@@ -1,24 +1,24 @@
 import "./TableMembers.scss";
 
-import { Link, useParams } from "react-router-dom";
 import React, { useState } from "react";
-import {
-  useGetCustomerByIdQuery,
-  useGetCustomersQuery,
-} from "../../context/api/customersApi";
+import { RiPushpinFill, RiPushpinLine } from "react-icons/ri";
 
+import { Link } from "react-router-dom";
 import Module from "../Module/Module";
-import PaymeForm from "../paymeForm/Payment";
+import Pagination from "@mui/material/Pagination";
 import Payment from "../paymeForm/Payment";
+import Stack from "@mui/material/Stack";
+import { useGetCustomersQuery } from "../../context/api/customersApi";
 
 const TableMembers = () => {
-  const { data, error, isLoading } = useGetCustomersQuery();
   const [payment, setPayment] = useState(false);
+  const [page, setPage] = useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading data</div>;
-  console.log(data.innerData);
-
+  const { data } = useGetCustomersQuery({ page: page - 1 });
+  let pageLength = Math.ceil(data?.totalCount / 10);
   return (
     <>
       <table className="table">
@@ -33,51 +33,88 @@ const TableMembers = () => {
           </tr>
         </thead>
         <tbody>
-          {data?.innerData.map((customer) => (
-            <tr key={customer._id}>
-              <td>
-                {customer.lname}
-                {customer.fname}
-              </td>
-              <td>{customer.address}</td>
-              <td>{customer.phone_primary || customer.phones}</td>
-              <td>
-                <span
-                  className={`table__budget ${
-                    customer.budget == 0
-                      ? "table__budget__null"
-                      : customer.budget < 0
-                      ? "table__budget__minus"
-                      : ""
-                  } `}
-                >
-                  {customer.budget}$
-                </span>
-              </td>
-              <td>
-                <button
-                  onClick={() => setPayment(customer)}
-                  className="table__payment__button"
-                >
-                  Payment
-                </button>
-              </td>
-              <td>
-                <Link to={`/admin/customer/${customer._id}`}>
-                  <button className="table__more__button">More...</button>
-                </Link>
-              </td>
-            </tr>
-          ))}
+          {data?.innerData.map(
+            ({
+              _id,
+              lname,
+              fname,
+              address,
+              phone_primary,
+              phones,
+              budget,
+              pin,
+            }) => (
+              <tr className="table__tr" key={_id}>
+                <td className="table__td">
+                  <button
+                    onClick={() =>
+                      handlePinClick({
+                        _id,
+                        lname,
+                        fname,
+                        address,
+                        phone_primary,
+                        phones,
+                        budget,
+                        pin,
+                      })
+                    }
+                    className="pin__button"
+                    aria-label={`Pin ${fname} ${lname}`}
+                  >
+                    {pin ? <RiPushpinFill /> : <RiPushpinLine />}
+                  </button>
+                  {lname} {fname}
+                </td>
+                <td>{address}</td>
+                <td>{phone_primary || phones}</td>
+                <td>
+                  <span
+                    className={`table__budget ${
+                      budget === 0
+                        ? "table__budget__null"
+                        : budget < 0
+                        ? "table__budget__minus"
+                        : ""
+                    }`}
+                  >
+                    {budget}$
+                  </span>
+                </td>
+                <td>
+                  <button
+                    onClick={() => setPayment({ _id })}
+                    className="table__payment__button"
+                    aria-label={`Make payment for ${fname} ${lname}`}
+                  >
+                    Payment
+                  </button>
+                </td>
+                <td>
+                  <Link to={`/admin/customer/${_id}`}>
+                    <button
+                      className="table__more__button"
+                      aria-label={`More details about ${fname} ${lname}`}
+                    >
+                      More...
+                    </button>
+                  </Link>
+                </td>
+              </tr>
+            )
+          )}
         </tbody>
-        {payment ? (
-          <Module bg={"#aaa8"} close={setPayment}>
-            <Payment close={setPayment} id={payment._id} />
-          </Module>
-        ) : (
-          <></>
-        )}
       </table>
+      {payment && (
+        <Module bg={"#aaa8"} close={setPayment}>
+          <Payment close={setPayment} id={payment._id} />
+        </Module>
+      )}
+      <div className="table__pagination">
+        <Stack spacing={2}>
+          <Pagination count={pageLength} page={page} onChange={handleChange} />
+        </Stack>
+      </div>
     </>
   );
 };

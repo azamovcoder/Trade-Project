@@ -1,6 +1,7 @@
-import React from "react";
 import "./module.scss";
+
 import { IoMdClose } from "react-icons/io";
+import React from "react";
 
 function Module({ children, width, close, bg }) {
   return (
@@ -10,6 +11,8 @@ function Module({ children, width, close, bg }) {
         onClick={() => close(false)}
         className="overlay"
       ></div>
+
+      
       <div style={{ width }} className="model">
         <button onClick={() => close(false)} className="model__btn">
           <IoMdClose />

@@ -15,6 +15,9 @@ $table-padding: 15px;
   th {
     text-align: start;
   }
+  tr {
+    position: relative;
+  }
   &__budget {
     text-align: center !important;
     border-radius: 5px;
@@ -30,6 +33,10 @@ $table-padding: 15px;
       background: #fcd7d4;
       color: #ef3826;
     }
+  }
+  &__pagination {
+    width: 350px;
+    margin: 50px auto;
   }
   th,
   td {
@@ -72,4 +79,17 @@ $table-padding: 15px;
       color: #fff;
     }
   }
+}
+
+.table__td {
+  position: relative;
+  margin: 100px;
+}
+.pin__button {
+  top: 5px;
+  left: 5px;
+  position: absolute;
+  background: none;
+  border: none;
+  font-size: 18px;
 }

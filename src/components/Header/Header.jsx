@@ -1,11 +1,14 @@
 import "./Header.scss";
 
+import React, { useState } from "react";
+
+import CustomerSearch from "./CustomerSearch";
 import { FaBars } from "react-icons/fa6";
 import { IoSearchOutline } from "react-icons/io5";
-import React from "react";
 
 const Header = ({ setMenu }) => {
   console.log();
+  const [search, setSearch] = useState("");
   return (
     <header>
       <div className=" header">
@@ -22,7 +25,13 @@ const Header = ({ setMenu }) => {
             <button>
               <IoSearchOutline />
             </button>
-            <input type="text" placeholder="Search" />
+            <input
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder={"search"}
+              value={search}
+              type="text"
+            />
+            {search ? <CustomerSearch search={search} /> : <></>}
           </div>
         </div>
       </div>

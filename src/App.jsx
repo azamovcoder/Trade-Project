@@ -8,6 +8,7 @@ import Customer from "./pages/Admin/Customer/Customer";
 import Customers from "./pages/Admin/customers/Customers";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
+import Profile from "./pages/Admin/profile/Profile";
 import Sellers from "./pages/Admin/sellers/Sellers";
 import Storage from "./pages/Admin/storage/Storage";
 import { useState } from "react";
@@ -23,10 +24,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin menu={menu} />}>
           <Route path="customers" element={<Customers />} />
-          <Route path="customer" element={<Customer />} />
+          <Route path="customer/:id" element={<Customer />} />
           <Route path="storage" element={<Storage />} />
           <Route path="sellers" element={<Sellers />} />
           <Route path="create" element={<Create />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </>

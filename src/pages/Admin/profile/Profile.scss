@@ -1,0 +1,41 @@
+.profile {
+  width: 90%;
+  max-height: 400px;
+  margin: 20px auto;
+  padding: 30px;
+  border: 2px solid #ddd;
+  &__body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    button {
+      font-size: 20px;
+      border: none;
+      background: none;
+      padding: 5px;
+    }
+    li {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+    }
+  }
+  &__edit__form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    button,
+    input {
+      padding: 5px;
+      outline: none;
+      border: 1.5px solid #ddd;
+      border-radius: 5px;
+    }
+  }
+}

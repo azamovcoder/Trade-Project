@@ -3,8 +3,14 @@ import { api } from "./index";
 export const productApi = api.injectEndpoints({
   endpoints: (build) => ({
     getCustomers: build.query({
+      query: ({ page }) => ({
+        url: `/get/customers?skip=${page}`,
+      }),
+      providesTags: ["Customer"],
+    }),
+    getCustomersBySearch: build.query({
       query: (params) => ({
-        url: "/get/customers",
+        url: "get/customers/search?",
         params,
       }),
       providesTags: ["Customer"],
@@ -32,8 +38,8 @@ export const productApi = api.injectEndpoints({
     }),
     updateCustomer: build.mutation({
       query: ({ id, body }) => ({
-        url: `delete/customer/${id}`,
-        method: "PUT", // or "PATCH"
+        url: `update/customer/${id}`,
+        method: "PATCH", // or "PATCH"
         body,
       }),
       invalidatesTags: ["Customer"],
@@ -44,6 +50,8 @@ export const productApi = api.injectEndpoints({
 export const {
   useGetCustomersQuery,
   useGetCustomerByIdQuery,
+  useGetCustomersBySearchQuery,
   useCreateCustomerMutation,
   useDeleteCustomerMutation,
+  useUpdateCustomerMutation,
 } = productApi;
