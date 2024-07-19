@@ -12,8 +12,8 @@ import { useGetValue } from "../../../hooks/useGetValue";
 import { useNavigate } from "react-router-dom";
 
 let initialState = {
-  username: "azamovcoder",
-  password: "abdulaziz230",
+  username: "",
+  password: "",
 };
 
 const Login = () => {
@@ -59,7 +59,6 @@ const Login = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              required
               type="password"
             />
           </div>

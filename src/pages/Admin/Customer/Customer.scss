@@ -20,10 +20,11 @@
   }
 }
 .payment__history {
-  padding: 50px 0;
+  height: 300px;
+  padding-bottom: 50px;
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   gap: 20px;
   &__card {

@@ -4,11 +4,12 @@ $table-padding: 15px;
 
 .table {
   width: 95%;
-  margin: 0 auto;
+  margin: 50px auto;
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid $table-border-color;
   border-radius: $table-border-radius;
+  background: #fff;
   &__budget__title {
     text-align: center;
   }
@@ -37,6 +38,11 @@ $table-padding: 15px;
   &__pagination {
     width: 350px;
     margin: 50px auto;
+  }
+  &__paid {
+    border: none;
+    background: none;
+    position: absolute;
   }
   th,
   td {

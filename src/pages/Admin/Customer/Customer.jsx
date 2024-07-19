@@ -73,7 +73,9 @@ const Customer = () => {
         </Module>
       )}
       {history ? (
-        <div className="payment__history">{PaymentHistory}</div>
+        <Module width={700} bg={"#aaa8"} close={setHistory}>
+          <div className="payment__history">{PaymentHistory}</div>
+        </Module>
       ) : (
         <></>
       )}

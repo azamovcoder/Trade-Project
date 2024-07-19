@@ -25,7 +25,7 @@ const Profile = () => {
   const [formData, setFormData] = useState(initialState);
   const [updateProfile] = useUpdateProfileMutation();
   const user = data?.innerData?.user;
-
+  console.log(formData);
   useEffect(() => {
     if (data) {
       setFormData({

@@ -1,26 +1,123 @@
 import "./TableMembers.scss";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiPushpinFill, RiPushpinLine } from "react-icons/ri";
+import {
+  useGetCustomersQuery,
+  useUpdateCustomerMutation,
+} from "../../context/api/customersApi";
 
 import { Link } from "react-router-dom";
 import Module from "../Module/Module";
 import Pagination from "@mui/material/Pagination";
 import Payment from "../paymeForm/Payment";
+import { PiCoinsDuotone } from "react-icons/pi";
 import Stack from "@mui/material/Stack";
-import { useGetCustomersQuery } from "../../context/api/customersApi";
+import { useGetProfileQuery } from "../../context/api/AdminApi";
+
+// import { useGetUsersQuery } from "../../context/api/userApi";
 
 const TableMembers = () => {
   const [payment, setPayment] = useState(false);
   const [page, setPage] = useState(1);
+  const [debtFilter, setDebtFilter] = useState("2");
+  const [paidToday, setPaidToday] = useState("2");
+  const [createdAt, setCreatedAt] = useState("-1");
+  const [budget, setBudget] = useState("0");
+  const [paid, setPaid] = useState(true);
+  const [pinCustom, {}] = useUpdateCustomerMutation();
   const handleChange = (event, value) => {
     setPage(value);
   };
+  const { user, refetch } = useGetProfileQuery();
+  const { data } = useGetCustomersQuery({
+    page: page - 1,
+    paidToday: paidToday,
+    debt: debtFilter,
+    createdAt: createdAt,
+    budget: budget,
+  });
+  let User = user?.innerData?.user;
+  console.log(User);
+  const handleCreatedAtChange = (event) => {
+    setCreatedAt(event.target.value);
+    setPage(1);
+  };
+  const handleBudgetChange = (event) => {
+    setBudget(event.target.value);
+    setPage(1);
+  };
+  const handleDebtFilterChange = (event) => {
+    setDebtFilter(event.target.value);
+    setPage(1);
+  };
+  const handlePaidChange = (event) => {
+    setPaidToday(event.target.value);
+    setPage(1);
+  };
 
-  const { data } = useGetCustomersQuery({ page: page - 1 });
-  let pageLength = Math.ceil(data?.totalCount / 10);
+  const handlePinClick = ({
+    _id,
+    lname,
+    fname,
+    address,
+    phone_primary,
+    phones,
+    budget,
+    pin,
+  }) => {
+    // const pinData = {
+    //   ...customer,
+    //   pin: !customer.pin,
+    // };
+    pinCustom({
+      id: _id,
+      body: {
+        _id,
+        lname,
+        fname,
+        address,
+        phone_primary,
+        phones,
+        budget,
+        pin: !pin,
+      },
+    });
+  };
+
+  const pageLength = Math.ceil(data?.totalCount / 10);
   return (
     <>
+      <select
+        name="isPaid"
+        id="isPaid"
+        onChange={handlePaidChange}
+        value={paidToday}
+      >
+        <option value="2">Barchasi</option>
+        <option value="1">To'lov qilganlar</option>
+        <option value="-1">To'lov qilmaganlar</option>
+      </select>
+      <select
+        name="debt"
+        id="debt"
+        onChange={handleDebtFilterChange}
+        value={debtFilter}
+      >
+        <option value="2">All</option>
+        <option value="1">Haqdorlar</option>
+        <option value="-1">Qarzdorlar</option>
+        <option value="0">Nollar</option>
+      </select>
+      <select name="" id="" onChange={handleCreatedAtChange} value={createdAt}>
+        <option value="1">oldest</option>
+        <option value="-1">lastest</option>
+      </select>
+      <select name="" id="" onChange={handleBudgetChange} value={budget}>
+        <option value="0">Default</option>
+        <option value="1">123</option>
+        <option value="-1">321</option>
+      </select>
       <table className="table">
         <thead>
           <tr>
@@ -62,7 +159,11 @@ const TableMembers = () => {
                     className="pin__button"
                     aria-label={`Pin ${fname} ${lname}`}
                   >
-                    {pin ? <RiPushpinFill /> : <RiPushpinLine />}
+                    {pin ? (
+                      <RiPushpinFill color="blue" />
+                    ) : (
+                      <RiPushpinLine color="blue" />
+                    )}
                   </button>
                   {lname} {fname}
                 </td>
@@ -99,6 +200,13 @@ const TableMembers = () => {
                       More...
                     </button>
                   </Link>
+                  {paid ? (
+                    <span className="table__paid">
+                      <PiCoinsDuotone color="gold" />
+                    </span>
+                  ) : (
+                    <></>
+                  )}
                 </td>
               </tr>
             )

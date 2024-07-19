@@ -7,7 +7,9 @@ const Admin = ({ menu }) => {
   return (
     <div className={`admin ${menu ? "admin__show" : ""}`}>
       <Sidebar menu={menu} />
-      <Outlet />
+      <div className="outlet">
+        <Outlet />
+      </div>
     </div>
   );
 };

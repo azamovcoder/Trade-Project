@@ -3,8 +3,8 @@ import { api } from "./index";
 export const productApi = api.injectEndpoints({
   endpoints: (build) => ({
     getCustomers: build.query({
-      query: ({ page }) => ({
-        url: `/get/customers?skip=${page}`,
+      query: ({ page, paidToday, debt, createdAt, budget }) => ({
+        url: `/get/customers?skip=${page}&paidToday=${paidToday}&debt=${debt}&createdAt=${createdAt}&budget=${budget}`,
       }),
       providesTags: ["Customer"],
     }),
