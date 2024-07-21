@@ -5,6 +5,7 @@ import { IoCreateOutline } from "react-icons/io5";
 import { IoPeopleSharp } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import React from "react";
+import { RiLogoutBoxLine } from "react-icons/ri";
 import { SiGooglecloudstorage } from "react-icons/si";
 
 const Sidebar = ({ menu }) => {
@@ -52,9 +53,12 @@ const Sidebar = ({ menu }) => {
           </NavLink>
         </li>
       </ul>
-      <div className="">
+      <div className="sidebar__log__out">
         <NavLink to={"/"}>
-          <span>LogOut</span>
+          <span>
+            <RiLogoutBoxLine />
+          </span>
+          <p>Log Out</p>
         </NavLink>
       </div>
     </div>

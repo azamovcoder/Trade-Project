@@ -88,47 +88,53 @@ const TableMembers = () => {
   const pageLength = Math.ceil(data?.totalCount / 10);
   return (
     <>
-      <select
-        name="isPaid"
-        id="isPaid"
-        onChange={handlePaidChange}
-        value={paidToday}
-      >
-        <option value="2">Barchasi</option>
-        <option value="1">To'lov qilganlar</option>
-        <option value="-1">To'lov qilmaganlar</option>
-      </select>
-      <select
-        name="debt"
-        id="debt"
-        onChange={handleDebtFilterChange}
-        value={debtFilter}
-      >
-        <option value="2">All</option>
-        <option value="1">Haqdorlar</option>
-        <option value="-1">Qarzdorlar</option>
-        <option value="0">Nollar</option>
-      </select>
-      <select name="" id="" onChange={handleCreatedAtChange} value={createdAt}>
-        <option value="1">oldest</option>
-        <option value="-1">lastest</option>
-      </select>
-      <select name="" id="" onChange={handleBudgetChange} value={budget}>
-        <option value="0">Default</option>
-        <option value="1">123</option>
-        <option value="-1">321</option>
-      </select>
+      <div className="table__selects">
+        <select
+          name="isPaid"
+          id="isPaid"
+          onChange={handlePaidChange}
+          value={paidToday}
+        >
+          <option value="2">Barchasi</option>
+          <option value="1">To'lov qilganlar</option>
+          <option value="-1">To'lov qilmaganlar</option>
+        </select>
+        <select
+          name="debt"
+          id="debt"
+          onChange={handleDebtFilterChange}
+          value={debtFilter}
+        >
+          <option value="2">All</option>
+          <option value="1">Haqdorlar</option>
+          <option value="-1">Qarzdorlar</option>
+          <option value="0">Nollar</option>
+        </select>
+        <select
+          name=""
+          id=""
+          onChange={handleCreatedAtChange}
+          value={createdAt}
+        >
+          <option value="1">oldest</option>
+          <option value="-1">lastest</option>
+        </select>
+        <select name="" id="" onChange={handleBudgetChange} value={budget}>
+          <option value="0">Default</option>
+          <option value="1">123</option>
+          <option value="-1">321</option>
+        </select>
+      </div>
+
       <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Tel</th>
-            <th className="table__budget__title">Budget</th>
-            <th>Pay</th>
-            <th>More...</th>
-          </tr>
-        </thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Tel</th>
+          <th className="table__budget__title">Budget</th>
+          <th>Payment</th>
+          <th>More...</th>
+        </tr>
         <tbody>
           {data?.innerData.map(
             ({
@@ -142,7 +148,7 @@ const TableMembers = () => {
               pin,
             }) => (
               <tr className="table__tr" key={_id}>
-                <td className="table__td">
+                <td data-cell="name" className="table__td">
                   <button
                     onClick={() =>
                       handlePinClick({
@@ -167,9 +173,9 @@ const TableMembers = () => {
                   </button>
                   {lname} {fname}
                 </td>
-                <td>{address}</td>
-                <td>{phone_primary || phones}</td>
-                <td>
+                <td data-cell="address">{address}</td>
+                <td data-cell="tel">{phone_primary || phones}</td>
+                <td data-cell="budget">
                   <span
                     className={`table__budget ${
                       budget === 0
@@ -182,7 +188,7 @@ const TableMembers = () => {
                     {budget}$
                   </span>
                 </td>
-                <td>
+                <td data-cell="payment">
                   <button
                     onClick={() => setPayment({ _id })}
                     className="table__payment__button"
@@ -191,7 +197,7 @@ const TableMembers = () => {
                     Payment
                   </button>
                 </td>
-                <td>
+                <td data-cell="more">
                   <Link to={`/admin/customer/${_id}`}>
                     <button
                       className="table__more__button"
@@ -200,13 +206,6 @@ const TableMembers = () => {
                       More...
                     </button>
                   </Link>
-                  {paid ? (
-                    <span className="table__paid">
-                      <PiCoinsDuotone color="gold" />
-                    </span>
-                  ) : (
-                    <></>
-                  )}
                 </td>
               </tr>
             )

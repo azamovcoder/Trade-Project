@@ -13,6 +13,14 @@ header {
   align-items: center;
   padding: 10px 30px;
   gap: 100px;
+  &__logo {
+    display: flex;
+    text-transform: uppercase;
+    padding: 10px;
+    background: dodgerblue;
+    color: #fff;
+    border-radius: 50%;
+  }
   &__items {
     display: flex;
     gap: 20px;
@@ -60,5 +68,26 @@ header {
     border: 1.5px solid #ddd;
     border-radius: 5px;
     cursor: pointer;
+  }
+}
+@media (max-width: 700px) {
+  .header {
+    gap: 20px;
+    &__items {
+      padding-left: 10px;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .header {
+    &__input {
+      width: 200px;
+    }
+  }
+}
+@media (max-width: 400px) {
+  .navbar__menu {
+    display: none;
   }
 }

@@ -5,14 +5,21 @@ import React, { useState } from "react";
 import CustomerSearch from "./CustomerSearch";
 import { FaBars } from "react-icons/fa6";
 import { IoSearchOutline } from "react-icons/io5";
+import { useGetProfileQuery } from "../../context/api/AdminApi";
 
 const Header = ({ setMenu }) => {
-  console.log();
+  const { data } = useGetProfileQuery();
+  console.log(data);
   const [search, setSearch] = useState("");
   return (
     <header>
       <div className=" header">
-        <h1 className="header__logo">Trade</h1>
+        <div className="header__logo">
+          <h2>
+            {data?.innerData?.user?.lname?.slice(0, 1)}
+            {data?.innerData?.user?.fname?.slice(0, 1)}
+          </h2>
+        </div>
 
         <div className="header__items">
           <button

@@ -41,7 +41,7 @@ const Login = () => {
 
   return (
     <Fragment>
-      <div className="login container">
+      <div className="login">
         <form onSubmit={handleLogin} action="" className="login__form">
           <div className="login__form__input">
             <label htmlFor="">UserName</label>

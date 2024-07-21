@@ -1,33 +1,38 @@
 .login {
-  padding-top: 100px;
-  width: 300px;
-  min-height: 500px;
+  display: flex;
+
+  background: url("../../../assets/lop.jpg") no-repeat;
+  background-size: 100%;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  backdrop-filter: blur(1px);
   &__form {
+    backdrop-filter: blur(1px);
+    background: #fff;
+    height: 250px;
+    width: 250px;
+    padding: 20px;
+    margin: 250px;
+    margin-left: 650px;
     display: flex;
     flex-direction: column;
+    color: gray;
     gap: 15px;
-    &__input {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      input {
-        padding: 10px;
-        outline: none;
-        border: 1.5px solid #969393;
-        transition: 0.4s;
-        &:hover {
-          border: 1.5px solid #33a0ff;
-          border-radius: 4px;
-        }
-      }
+    font-size: 14px;
+    input {
+      font-size: 14px;
+      background: transparent;
+      width: 100%;
+      border: 1.5px solid grey;
+      padding: 3px;
+      border-radius: 3px;
+      outline: none;
     }
     button {
-      padding: 10px 5px;
-      border: none;
-      background-color: #33a0ff;
-      color: #fff;
-      font-weight: 600;
-      border-radius: 5px;
+      font-size: 14px;
+      padding: 1px;
+      color: gray;
     }
   }
 }
