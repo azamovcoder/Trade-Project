@@ -56,7 +56,7 @@ const Sidebar = ({ menu }) => {
       <div className="sidebar__log__out">
         <NavLink to={"/"}>
           <span>
-            <RiLogoutBoxLine />
+            <RiLogoutBoxLine className="sidebar__log__out__logo" />
           </span>
           <p>Log Out</p>
         </NavLink>
