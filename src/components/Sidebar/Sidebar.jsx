@@ -45,6 +45,14 @@ const Sidebar = ({ menu }) => {
           </NavLink>
         </li>
         <li className="sidebar__item">
+          <NavLink to={"createProduct"}>
+            <span>
+              <IoCreateOutline />
+            </span>
+            <p>Create Product</p>
+          </NavLink>
+        </li>
+        <li className="sidebar__item">
           <NavLink to={"profile"}>
             <span>
               <IoCreateOutline />

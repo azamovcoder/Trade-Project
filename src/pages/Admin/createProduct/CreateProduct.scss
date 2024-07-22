@@ -1,0 +1,44 @@
+.create__product {
+  h2 {
+    padding: 50px;
+  }
+}
+
+.choose__seller {
+  padding: 5px;
+  margin-left: 50px;
+  margin-bottom: 10px;
+}
+.choosen__seller {
+  padding-left: 50px;
+  display: flex;
+  gap: 10px;
+}
+
+.sellers {
+  padding-left: 50px;
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  gap: 10px;
+  p {
+    padding: 5px;
+    background: #ddd;
+    width: 100%;
+    cursor: pointer;
+
+    border-radius: 3px;
+  }
+}
+
+.create__product__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  input {
+    padding: 5px;
+  }
+  textarea {
+    height: 70px;
+  }
+}
