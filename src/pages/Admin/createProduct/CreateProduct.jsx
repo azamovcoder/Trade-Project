@@ -1,132 +1,164 @@
 import "./CreateProduct.scss";
 
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 
 import Module from "../../../components/Module/Module";
 import { useCreateProductMutation } from "../../../context/api/productApi";
 import { useGetSellersBySearchQuery } from "../../../context/api/sellerApi";
 
-const CreateProduct = () => {
+const CreateProduct = ({ close }) => {
   const [value, setValue] = useState("");
   const [seller, setSeller] = useState(null);
-  const { data, isError } = useGetSellersBySearchQuery({ value: value.trim() });
-  const [createProduct, { isSuccess, isLoading }] = useCreateProductMutation();
+  const [newProduct, setNewProduct] = useState({
+    title: "",
+    price: "",
+    units: "",
+    quantity: "",
+    category: "",
+    comment: "",
+    sellerId: "",
+  });
 
-  const [title, setTitle] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const [comment, setComment] = useState("");
-  const [units, setUnits] = useState("");
+  const { data: searchData, isLoading } = useGetSellersBySearchQuery({
+    value: value.trim(),
+  });
 
-  const handleCreateProduct = (e) => {
+  const [createProduct, { data, error }] = useCreateProductMutation();
+
+  const handleCreateProduct = async (e) => {
     e.preventDefault();
-    let newProduct = {
-      title: title,
-      quantity: quantity,
-      price: price,
-      category: category,
-      comment: comment,
-      units: units,
-      seller: seller._id,
-    };
-    createProduct(newProduct);
+    try {
+      await createProduct({ ...newProduct, sellerId: seller._id });
+      console.log("Product created successfully", data);
+      setSeller(null);
+    } catch (err) {
+      console.error("Failed to create product:", err);
+    }
   };
 
   return (
-    <div className="create__product">
-      <h2>Create Product</h2>
-      {seller ? (
-        <div className="choosen__seller">
-          <p>{seller?.fname}</p>{" "}
-          <button onClick={() => setSeller(null)}>cancel</button>
-        </div>
+    <section className="choose__seller">
+      <input
+        onChange={(e) => setValue(e.target.value)}
+        disabled={!!seller}
+        value={seller ? seller.fname : value}
+        type="text"
+        placeholder="Seller name"
+      />
+      {!value.trim() ? (
+        <></>
       ) : (
-        <>
-          <input
-            className="choose__seller"
-            type="text"
-            autoFocus
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder="enter seller name"
-          />
-        </>
-      )}
-      <div className="sellers">
-        {!value.trim() ? (
-          <></>
-        ) : isError ? (
-          <p>Not found</p>
-        ) : (
-          data?.innerData?.map((item) => (
-            <p
+        <div className="sellers">
+          {searchData?.innerData?.map((sellerItem) => (
+            <li
+              key={sellerItem?._id}
               onClick={() => {
-                setSeller(item);
+                setSeller(sellerItem);
                 setValue("");
               }}
-              key={item._id}
             >
-              {item?.fname}
-            </p>
-          ))
-        )}
-        {seller ? (
-          <Module bg={"#aaa8"} close={setSeller}>
+              {sellerItem?.fname}
+            </li>
+          ))}
+        </div>
+      )}
+      {seller && (
+        <Module close={setSeller}>
+          <div className="createProduct">
             <form
-              className="create__product__form"
               onSubmit={handleCreateProduct}
+              className="create__product__form"
             >
               <input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                id="title"
+                required
+                value={newProduct.title}
+                onChange={(e) =>
+                  setNewProduct((prev) => ({
+                    ...prev,
+                    title: e.target.value,
+                  }))
+                }
+                className="input"
                 type="text"
-                placeholder="title"
+                placeholder="Title"
               />
               <input
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                type="text"
-                placeholder="quantity"
+                id="price"
+                required
+                value={newProduct.price}
+                onChange={(e) =>
+                  setNewProduct((prev) => ({
+                    ...prev,
+                    price: Number(e.target.value),
+                  }))
+                }
+                className="input"
+                type="number"
+                placeholder="Price"
               />
-              <input
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                type="text"
-                placeholder="price"
-              />
-              <select value={units} onChange={(e) => setUnits(e.target.value)}>
-                <option value="dona">dona</option>
-                <option value="kg">kg</option>
-                <option value="litr">litr</option>
-              </select>
               <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                id="category"
+                onChange={(e) =>
+                  setNewProduct((prev) => ({
+                    ...prev,
+                    category: e.target.value,
+                  }))
+                }
               >
                 <option value="book">Book</option>
                 <option value="food">Food</option>
-                <option value="technical">Technical</option>
+                <option value="technical">technical</option>
               </select>
-              <textarea
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                cols="30"
-                placeholder="comment"
-                rows="10"
-              ></textarea>
-              <button type="submit" disabled={isLoading}>
+              <select
+                id="units"
+                onChange={(e) =>
+                  setNewProduct((prev) => ({
+                    ...prev,
+                    units: e.target.value,
+                  }))
+                }
+              >
+                <option value="dona">Dona</option>
+                <option value="kg">Kg</option>
+              </select>
+              <input
+                id="comment"
+                value={newProduct.comment}
+                onChange={(e) =>
+                  setNewProduct((prev) => ({
+                    ...prev,
+                    comment: e.target.value,
+                  }))
+                }
+                className="input"
+                type="text"
+                placeholder="Comment"
+              />
+              <input
+                id="quantity"
+                required
+                value={newProduct.quantity}
+                onChange={(e) =>
+                  setNewProduct((prev) => ({
+                    ...prev,
+                    quantity: Number(e.target.value),
+                  }))
+                }
+                className="input"
+                type="number"
+                placeholder="Quantity"
+              />
+              <button className="create-btn" id="button" type="submit">
                 {isLoading ? "Creating..." : "Create"}
               </button>
-              {isSuccess && <p>Product created successfully!</p>}
             </form>
-          </Module>
-        ) : (
-          <></>
-        )}
-      </div>
-    </div>
+            {error && <p className="error">{error.message}</p>}
+          </div>
+        </Module>
+      )}
+    </section>
   );
 };
 
-export default CreateProduct;
+export default memo(CreateProduct);
